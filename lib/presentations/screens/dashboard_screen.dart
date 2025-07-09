@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../cubits/dog_breed_cubits.dart';
 import '../widgets/buildMyNavBar.dart';
 import 'APIBreeds.dart';
 import 'LocalBreeds.dart';
@@ -35,9 +37,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: Colors.blueAccent,
         selectedItemColor: Colors.white,
         currentIndex: pageIndex,
-          onTap: (_){
+          onTap: (index){
           setState(() {
-            pageIndex=_;
+            pageIndex= index;
+            // if(index == 0){
+            //   context.read<DogBreedCubit>().reset();
+            //   context.read()<DogBreedCubit>().fetchBreeds(isInitial:true);
+            // }
           });
           },
           items: [

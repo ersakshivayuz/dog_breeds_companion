@@ -1,5 +1,8 @@
+import 'package:dog_breeds/data/repositories/dog_breed_repository.dart';
+import 'package:dog_breeds/presentations/cubits/dog_breed_cubits.dart';
 import 'package:dog_breeds/presentations/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
  runApp(MyApp());
@@ -12,18 +15,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-     debugShowCheckedModeBanner: false,
-     title: 'Dog Breeds Companion',
-     theme: ThemeData(
-         primarySwatch: Colors.blue,
-      primaryColor: Colors.blue,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      hoverColor: Colors.transparent,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (_)=>DogBreedCubit(DogBreedRepository())..fetchBreeds(isInitial: true),
+        ),
+      ],
+      child: MaterialApp(
+       debugShowCheckedModeBanner: false,
+       title: 'Dog Breeds Companion',
+       theme: ThemeData(
+           primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
 
-     ),
-     home: DashboardScreen(),
+       ),
+       home: DashboardScreen(),
+      ),
     );
   }
 }
