@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/repositories/custom_breed_repository.dart';
+import '../cubits/custom_breed_cubit.dart';
 import '../cubits/dog_breed_cubits.dart';
 import '../widgets/buildMyNavBar.dart';
 import 'APIBreeds.dart';
@@ -16,7 +18,12 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
 
   int pageIndex = 0;
-  final pages = [const APIBreeds(), const LocalBreeds()];
+  final pages = [const APIBreeds(),
+    BlocProvider(
+      create: (_) => CustomBreedsCubit(BreedRepository())..loadBreeds(),
+      child: const LocalBreeds(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onTap: (index){
           setState(() {
             pageIndex= index;
-            // if(index == 0){
-            //   context.read<DogBreedCubit>().reset();
-            //   context.read()<DogBreedCubit>().fetchBreeds(isInitial:true);
-            // }
+
           });
           },
           items: [
